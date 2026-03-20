@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moses Mwai Campaign</title>
+
+<style>
+body {font-family: Arial; margin:0; background:#f4f6f9;}
+nav {background:#0a3d62; color:white; padding:15px; display:flex; justify-content:space-between;}
+nav a {color:white; margin:0 10px; text-decoration:none;}
+.hero {height:90vh; background:url('cover.jpg'); background-size:cover; color:white; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+.hero img {width:120px; border-radius:50%;}
+section {padding:40px; max-width:900px; margin:auto;}
+.card {background:white; padding:20px; margin:10px 0; border-radius:10px;}
+.grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px;}
+button {padding:10px; width:100%; background:#0a3d62; color:white; border:none;}
+input {padding:10px; width:100%; margin:5px 0;}
+.whatsapp {position:fixed; bottom:20px; right:20px; background:#25D366; padding:15px; border-radius:50%; color:white;}
+</style>
+
+</head>
+
+<body>
+
+<nav>
+  <h3>Moses Mwai</h3>
+  <div>
+    <a href="#manifesto">Manifesto</a>
+    <a href="#volunteer">Join</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <img src="profile.jpg">
+  <h1>Moses Mwai</h1>
+  <p>Bahati North MP</p>
+</div>
+
+<section id="manifesto">
+<h2>Manifesto</h2>
+<div class="grid">
+<div class="card">Digital Transformation</div>
+<div class="card">Youth Jobs</div>
+<div class="card">Better Education</div>
+</div>
+</section>
+
+<section>
+<h2>Achievements</h2>
+<div class="grid">
+<div class="card">Founder MoNaTech</div>
+<div class="card">Youth Mentor</div>
+</div>
+</section>
+
+<section id="volunteer">
+<h2>Join Campaign</h2>
+
+<form onsubmit="saveVolunteer(event)">
+<input type="text" id="name" placeholder="Name" required>
+<input type="email" id="email" placeholder="Email" required>
+<button type="submit">Join</button>
+</form>
+
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<p>Phone: 0743327346</p>
+<p>Email: mwaimoses51@gmail.com</p>
+</section>
+
+<a href="https://wa.me/254743327346?text=I%20want%20to%20support%20your%20campaign" class="whatsapp">💬</a>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function saveVolunteer(e){
+e.preventDefault();
+let name = document.getElementById("name").value;
+let email = document.getElementById("email").value;
+
+db.collection("volunteers").add({
+name:name,
+email:email,
+time:new Date()
+});
+
+alert("Joined successfully!");
+}
+</script>
+
+</body>
+</html>
