@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+</head>
+
+<body>
+
+<h2>Admin Login</h2>
+<input type="password" id="pass" placeholder="Enter Password">
+<button onclick="login()">Login</button>
+
+<div id="dashboard" style="display:none;">
+<h2>Volunteers</h2>
+<ul id="list"></ul>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_PROJECT_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function login(){
+let pass = document.getElementById("pass").value;
+if(pass === "1234"){
+document.getElementById("dashboard").style.display="block";
+loadData();
+}else{
+alert("Wrong password");
+}
+}
+
+function loadData(){
+db.collection("volunteers").onSnapshot(snapshot=>{
+let list = document.getElementById("list");
+list.innerHTML="";
+snapshot.forEach(doc=>{
+let data = doc.data();
+let li = document.createElement("li");
+li.textContent = data.name + " - " + data.email;
+list.appendChild(li);
+});
+});
+}
+</script>
+
+</body>
+</html>
